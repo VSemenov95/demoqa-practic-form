@@ -1,29 +1,31 @@
-package test;
+package tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
-public class PracticeFormTests {
+public class RegistrationFormTests {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.timeout = 5000; // default 4000
+        Configuration.browser = "chrome";
+        Configuration.timeout = 5000;
         Configuration.holdBrowserOpen = true;
     }
 
     @Test
-    void fillStudentRegistrationForm(){
+    void successfulRegistrationTest(){
         open("/automation-practice-form");
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
 
         //filling name & last name
         $("#firstName").setValue("Ivan");
@@ -82,5 +84,4 @@ public class PracticeFormTests {
         $(".table-responsive").$(byText("State and City")).closest("tr").shouldHave(text("Haryana Karnal"));
         $("#closeLargeModal").scrollIntoView("{block: 'center'}").click();
     }
-
 }
