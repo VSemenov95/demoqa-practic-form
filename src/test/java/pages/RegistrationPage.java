@@ -24,13 +24,19 @@ public class RegistrationPage {
             submitButton = $("#submit"),
             stateDropDown =  $("#state"),
             cityDropDown =  $("#city"),
-            closeButton = $("#closeLargeModal");
+            closeButton = $("#closeLargeModal"),
+            titleForm = $(".practice-form-wrapper");
 
     CalendarComponent calendarComponent = new CalendarComponent();
 
+    public void checkTitleForm() {
+        titleForm.shouldHave(text("Student Registration Form"));
+
+    }
+
     public RegistrationPage openPage() {
         open("/automation-practice-form");
-        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        checkTitleForm();
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
 
@@ -42,6 +48,7 @@ public class RegistrationPage {
 
         return this;
     }
+
 
     public RegistrationPage setLastName(String value) {
         lastNameInput.setValue(value);
@@ -130,9 +137,8 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage pressCloseButton(String location) {
+    public void pressCloseButton(String location) {
         closeButton.scrollIntoView(location).click();
 
-        return this;
     }
 }
