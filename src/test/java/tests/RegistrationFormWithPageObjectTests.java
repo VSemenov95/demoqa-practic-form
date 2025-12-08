@@ -13,7 +13,7 @@ public class RegistrationFormWithPageObjectTests extends TestBase{
     void successfulRegistrationTest() {
         registrationPage
             .openPage()
-
+            .removeBanner()
         //filling out the registration form
             .setFirstName("Ivan")
             .setLastName("Ivanov")
@@ -50,6 +50,7 @@ public class RegistrationFormWithPageObjectTests extends TestBase{
     void successfullFillingRequiredFieldsForm() {
         registrationPage
                 .openPage()
+                .removeBanner()
                 .setFirstName("Ivan")
                 .setLastName("Ivanov")
                 .setGender("Male")
@@ -70,6 +71,7 @@ public class RegistrationFormWithPageObjectTests extends TestBase{
     void checkRegistrationWithoutFirstName() {
         registrationPage
                 .openPage()
+                .removeBanner()
                 .setFirstName("")
                 .setLastName("Ivanov")
                 .setGender("Male")

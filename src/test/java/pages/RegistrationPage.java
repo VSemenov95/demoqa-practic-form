@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.TableSuccessRegistration;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -27,6 +28,7 @@ public class RegistrationPage {
             closeButton = $("#closeLargeModal"),
             titleForm = $(".practice-form-wrapper");
 
+    TableSuccessRegistration tableSuccessRegistration = new TableSuccessRegistration();
     CalendarComponent calendarComponent = new CalendarComponent();
 
     public void checkTitleForm() {
@@ -37,6 +39,11 @@ public class RegistrationPage {
     public RegistrationPage openPage() {
         open("/automation-practice-form");
         checkTitleForm();
+
+        return this;
+    }
+
+    public RegistrationPage removeBanner() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
 
@@ -131,8 +138,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage checkResult(String key, String value) {
-        $(".table-responsive").$(byText(key)).parent()
-                .shouldHave(text(value));
+        tableSuccessRegistration.checkLine(key, value);
 
         return this;
     }
