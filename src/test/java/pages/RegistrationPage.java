@@ -90,10 +90,10 @@ public class RegistrationPage {
     }
 
 
-    public RegistrationPage setSubject(String input, String choice) {
+    public RegistrationPage setSubject(String input) {
         subjectsInput.click();
         subjectsDropDown.sendKeys(input);
-        $(byText(choice)).click();
+        subjectsDropDown.pressEnter();
 
         return this;
     }

@@ -4,65 +4,65 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
-public class RegistrationFormWithPageObjectTests extends TestBase{
+import static tests.TestData.*;
 
-    RegistrationPage registrationPage = new RegistrationPage();
+
+class RegistrationFormWithPageObjectTests extends TestBase{
+       RegistrationPage registrationPage = new RegistrationPage();
+       TestData testData = new TestData();
 
     @Test
     @DisplayName("Проверка регистрации с заполнением всех полей")
     void successfulRegistrationTest() {
+
         registrationPage
             .openPage()
             .removeBanner()
         //filling out the registration form
-            .setFirstName("Ivan")
-            .setLastName("Ivanov")
-            .setEmail("IvanIvanov@gmail.com")
-            .setGender("Male")
-            .setUserNumber("8999999999")
-            .setDateOfBirth("3","May","1995")
-            .setSubject("c","Commerce")
-            .setHobbies("Music")
-            .uploadPicture("selenide.png")
-            .setCurrentAddress("Russia, Moscow, Lenina st, 5")
-            .scrollToSubmitButton("{block: 'center'}")
-            .setStateAndCity("Haryana","Karnal")
+            .setFirstName(firstName)
+            .setLastName(lastName)
+            .setEmail(email)
+            .setGender(gender)
+            .setUserNumber(phoneNumber)
+            .setDateOfBirth(day,month,year)
+            .setSubject(subjects)
+            .setHobbies(hobbies)
+            .uploadPicture(picture)
+            .setCurrentAddress(fullAddress)
+            .setStateAndCity(testData.state, testData.city)
             .clickSubmitButton();
 
         //check the result from the table
         registrationPage
-             .checkResult("Student Name", "Ivan Ivanov")
-             .checkResult("Student Email", "Ivanov")
-             .checkResult("Gender", "Male")
-             .checkResult("Mobile", "8999999999")
-             .checkResult("Date of Birth", "03 May,1995")
-             .checkResult("Subjects", "Commerce")
-             .checkResult("Hobbies", "Music")
-             .checkResult("Picture", "selenide.png")
-             .checkResult("Address", "Russia, Moscow, Lenina st, 5")
-             .checkResult("State and City", "Haryana Karnal")
+             .checkResult("Student Name", fullName)
+             .checkResult("Student Email", email)
+             .checkResult("Gender", gender)
+             .checkResult("Mobile", phoneNumber)
+             .checkResult("Date of Birth", dateBirth)
+             .checkResult("Subjects", subjects)
+             .checkResult("Hobbies", hobbies)
+             .checkResult("Picture", picture)
+             .checkResult("Address", fullAddress)
+             .checkResult("State and City", testData.state + " " + testData.city);
         //closing modal window with a table
-             .pressCloseButton("{block: 'center'}");
     }
 
     @Test
     @DisplayName("Проверка регистрации с заполнением только обязательных полей")
-    void successfullFillingRequiredFieldsForm() {
+    void successfulFillingRequiredFieldsForm() {
         registrationPage
                 .openPage()
                 .removeBanner()
-                .setFirstName("Ivan")
-                .setLastName("Ivanov")
-                .setGender("Male")
-                .setUserNumber("8999999999")
-                .scrollToSubmitButton("{block: 'center'}")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setGender(gender)
+                .setUserNumber(phoneNumber)
                 .clickSubmitButton();
 
         registrationPage
-                .checkResult("Student Name", "Ivan Ivanov")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "8999999999")
-                .pressCloseButton("{block: 'center'}");
+                .checkResult("Student Name", fullName)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", phoneNumber);
     }
 
     @Test
@@ -73,10 +73,9 @@ public class RegistrationFormWithPageObjectTests extends TestBase{
                 .openPage()
                 .removeBanner()
                 .setFirstName("")
-                .setLastName("Ivanov")
-                .setGender("Male")
-                .setUserNumber("8999999999")
-                .scrollToSubmitButton("{block: 'center'}")
+                .setLastName(lastName)
+                .setGender(gender)
+                .setUserNumber(phoneNumber)
                 .clickSubmitButton()
                 .checkTitleForm();
     }
